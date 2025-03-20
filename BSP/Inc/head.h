@@ -23,5 +23,7 @@
 void LCD_Disp(uint8_t Line, char *format,...);
 void LCD_Proc(void);
 void Key_Proc(void);
+void My_RTC_SetTime(void);
+
 #endif // !__HEAD_H__
 

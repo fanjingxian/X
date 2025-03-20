@@ -8,7 +8,10 @@ uint8_t rx_buff[Buff_Size];
 uint32_t Key_PressTime[4] = {0};   // 各按键按下时间
 bool Key_LongPressed[4] = {false}; // 长按触发标志
 uint32_t Ferq;
-uint16_t MyRTC_Time[] = {23, 1, 1, 23, 59, 55};
+uint16_t MyRTC_Time[] = {23, 1, 1, 23, 59, 55};//年-月-日-时-分-秒
+uint8_t MyRTC_SetTime[3] = {0}; // 设置时间
+uint8_t MyRTC_SetDate[3] = {0}; // 设置日期
+
 uint8_t Disp_mode = 0; // 显示模式
 /*计时任务*/
 void alarm_clock()
@@ -36,6 +39,19 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
     }
 }
 
+// 设置频率（动态调整ARR/PSC，保持占空比）
+void Set_PWM_Frequency(uint32_t frequency) {
+    __HAL_TIM_SetAutoreload(&htim2, 1000000 / frequency - 1);
+}
+// 设置占空比（直接传入百分比）
+void Set_PWM_Duty(float duty_percent) {
+    duty_percent = (duty_percent < 0.0f) ? 0.0f : (duty_percent > 100.0f) ? 100.0f : duty_percent;
+    uint32_t arr = __HAL_TIM_GET_AUTORELOAD(&htim2);
+    uint32_t new_ccr = (uint32_t)((duty_percent / 100.0f) * (arr + 1));
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, new_ccr);
+    HAL_TIM_GenerateEvent(&htim2, TIM_EVENTSOURCE_UPDATE);
+}
+
 /*获取ADC*/
 double getADC(void)
 {
@@ -43,6 +59,13 @@ double getADC(void)
     HAL_ADC_Start(&hadc2);
     adc = HAL_ADC_GetValue(&hadc2);
     return adc * 3.3 / 4096;
+}
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    // if(huart->Instance == USART1) {
+    //     RX_data_Process();
+    //     HAL_UART_Receive_DMA(&huart1, Rx_buff, sizeof(Rx_buff));
+    // }
 }
 /*LCD打印重定向*/
 void LCD_Disp(uint8_t Line, char *format, ...)
@@ -77,16 +100,27 @@ void MyRTC_ReadTime(void)
     MyRTC_Time[3] = sTime.Hours;
     MyRTC_Time[4] = sTime.Minutes;
     MyRTC_Time[5] = sTime.Seconds;
-    //   HAL_RTC_SetDate();
-    //   HAL_RTC_SetTime();
 }
 
+void My_RTC_SetTime(void)
+{
+    RTC_TimeTypeDef sTime;
+    RTC_DateTypeDef sDate;
+    sTime.Hours = MyRTC_SetTime[0];
+    sTime.Minutes = MyRTC_SetTime[1];
+    sTime.Seconds = MyRTC_SetTime[2];
+    sDate.Year = MyRTC_SetDate[0];
+    sDate.Month = MyRTC_SetDate[1];
+    sDate.Date = MyRTC_SetDate[2];
+    HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
+    HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
+}
 /*按键扫描*/
 uint8_t Key_scan()
 {
     static uint32_t last_time = 0;
     if (HAL_GetTick() - last_time > 50)
-    { // 消抖时间
+    {
         if (Key1 == 0)
             return 1;
         else if (Key2 == 0)
@@ -104,15 +138,12 @@ uint8_t Key_scan()
 void Key_Proc(void)
 {
     alarm_clock();
-
     uint8_t Key_Val = Key_scan();
     static uint8_t Key_Old = 0;
-
-    uint8_t Key_Down = Key_Val & (Key_Old ^ Key_Val); // 下降沿检测（按下事件）
-    uint8_t Key_Up = ~Key_Val & (Key_Old ^ Key_Val);  // 上升沿检测（释放事件）
+    uint8_t Key_Down = Key_Val & (Key_Old ^ Key_Val);
+    uint8_t Key_Up = ~Key_Val & (Key_Old ^ Key_Val);
     Key_Old = Key_Val;
 
-    // 处理按键按下事件，记录时间
     switch (Key_Down)
     {
     case 1:
@@ -134,8 +165,6 @@ void Key_Proc(void)
     default:
         break;
     }
-
-    // 检查长按条件
     for (int i = 0; i < 4; i++)
     {
         if (Key_Val == (i + 1))
@@ -164,14 +193,15 @@ void Key_Proc(void)
             }
         }
     }
-
-    // 处理按键释放事件（短按）
     switch (Key_Up)
     {
     case 1:
         if (!Key_LongPressed[0])
         {                  // 未触发长按则为短按
             Disp_mode = 1; // 短按操作，如切换显示模式
+					
+					Set_PWM_Frequency(1000);
+                    Set_PWM_Duty(50.0f);
         }
         Key_PressTime[0] = 0; // 重置状态
         Key_LongPressed[0] = false;
@@ -179,8 +209,9 @@ void Key_Proc(void)
     case 2:
         if (!Key_LongPressed[1])
         {
-            // 按键2短按处理
+
             Usart1Printf("123");
+
         }
         Key_PressTime[1] = 0;
         Key_LongPressed[1] = false;
@@ -188,7 +219,7 @@ void Key_Proc(void)
     case 3:
         if (!Key_LongPressed[2])
         {
-            // 按键3短按处理
+
         }
         Key_PressTime[2] = 0;
         Key_LongPressed[2] = false;
@@ -196,7 +227,7 @@ void Key_Proc(void)
     case 4:
         if (!Key_LongPressed[3])
         {
-            // 按键4短按处理
+
         }
         Key_PressTime[3] = 0;
         Key_LongPressed[3] = false;

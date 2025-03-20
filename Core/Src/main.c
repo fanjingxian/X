@@ -101,7 +101,6 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_Delay(100);
-  
   LCD_Init();
   LCD_Clear(Black);
   LCD_SetBackColor(Black);
@@ -111,8 +110,10 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  My_RTC_SetTime();
   HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start_IT(&htim2,TIM_CHANNEL_2);
+	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2, 500);
   while (1)
   {
     LCD_Proc();
