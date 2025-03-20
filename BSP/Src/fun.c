@@ -7,12 +7,13 @@ unsigned char UartTxBuf[Buff_Size];
 uint8_t rx_buff[Buff_Size];
 uint32_t Key_PressTime[4] = {0};   // 各按键按下时间
 bool Key_LongPressed[4] = {false}; // 长按触发标志
-uint32_t Ferq;
 uint16_t MyRTC_Time[] = {23, 1, 1, 23, 59, 55};//年-月-日-时-分-秒
 uint8_t MyRTC_SetTime[3] = {0}; // 设置时间
 uint8_t MyRTC_SetDate[3] = {0}; // 设置日期
-
+uint32_t Ferq;
 uint8_t Disp_mode = 0; // 显示模式
+
+
 /*计时任务*/
 void alarm_clock()
 {
@@ -39,12 +40,10 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
     }
 }
 
-// 设置频率（动态调整ARR/PSC，保持占空比）
-void Set_PWM_Frequency(uint32_t frequency) {
+// 设置频率
+void Set_PWM_Frequency(uint32_t frequency,float duty_percent) {
     __HAL_TIM_SetAutoreload(&htim2, 1000000 / frequency - 1);
-}
-// 设置占空比（直接传入百分比）
-void Set_PWM_Duty(float duty_percent) {
+
     duty_percent = (duty_percent < 0.0f) ? 0.0f : (duty_percent > 100.0f) ? 100.0f : duty_percent;
     uint32_t arr = __HAL_TIM_GET_AUTORELOAD(&htim2);
     uint32_t new_ccr = (uint32_t)((duty_percent / 100.0f) * (arr + 1));
@@ -101,7 +100,6 @@ void MyRTC_ReadTime(void)
     MyRTC_Time[4] = sTime.Minutes;
     MyRTC_Time[5] = sTime.Seconds;
 }
-
 void My_RTC_SetTime(void)
 {
     RTC_TimeTypeDef sTime;
@@ -144,41 +142,22 @@ void Key_Proc(void)
     uint8_t Key_Up = ~Key_Val & (Key_Old ^ Key_Val);
     Key_Old = Key_Val;
 
-    switch (Key_Down)
-    {
-    case 1:
-        Key_PressTime[0] = HAL_GetTick();
-        Key_LongPressed[0] = false;
-        break;
-    case 2:
-        Key_PressTime[1] = HAL_GetTick();
-        Key_LongPressed[1] = false;
-        break;
-    case 3:
-        Key_PressTime[2] = HAL_GetTick();
-        Key_LongPressed[2] = false;
-        break;
-    case 4:
-        Key_PressTime[3] = HAL_GetTick();
-        Key_LongPressed[3] = false;
-        break;
-    default:
-        break;
-    }
+    Key_PressTime[Key_Down-1] = HAL_GetTick();
+    Key_LongPressed[Key_Down-1] = false;
+    
     for (int i = 0; i < 4; i++)
     {
         if (Key_Val == (i + 1))
-        { // 当前按键被按住
+        {
             uint32_t now = HAL_GetTick();
             if (!Key_LongPressed[i] && (now - Key_PressTime[i] >= 1500))
             {
-                Key_LongPressed[i] = true; // 标记长按已处理
-                // 执行长按操作
+                Key_LongPressed[i] = true;
                 switch (i + 1)
                 {
                 case 1: // 按键1长按
-                    // 长按处理代码，如进入设置模式
                     Disp_mode = 0;
+                    LCD_Clear(Black);
                     break;
                 case 2: // 按键2长按
                     // ...
@@ -195,45 +174,42 @@ void Key_Proc(void)
     }
     switch (Key_Up)
     {
-    case 1:
-        if (!Key_LongPressed[0])
-        {                  // 未触发长按则为短按
-            Disp_mode = 1; // 短按操作，如切换显示模式
-					
-					Set_PWM_Frequency(1000);
-                    Set_PWM_Duty(50.0f);
-        }
-        Key_PressTime[0] = 0; // 重置状态
-        Key_LongPressed[0] = false;
-        break;
-    case 2:
-        if (!Key_LongPressed[1])
-        {
+        case 1:
+            if (!Key_LongPressed[0])
+            {
+                Disp_mode = 1;
+                Set_PWM_Frequency(1000,50.0f);
+            }
+            Key_PressTime[0] = 0; // 重置状态
+            Key_LongPressed[0] = false;
+            break;
+        case 2:
+            if (!Key_LongPressed[1])
+            {
+                Set_PWM_Frequency(1000,10.0f);
+                Usart1Printf("123");
 
-            Usart1Printf("123");
+            }
+            Key_PressTime[1] = 0;
+            Key_LongPressed[1] = false;
+            break;
+        case 3:
+            if (!Key_LongPressed[2])
+            {
 
-        }
-        Key_PressTime[1] = 0;
-        Key_LongPressed[1] = false;
-        break;
-    case 3:
-        if (!Key_LongPressed[2])
-        {
+            }
+            Key_PressTime[2] = 0;
+            Key_LongPressed[2] = false;
+            break;
+        case 4:
+            if (!Key_LongPressed[3])
+            {
 
-        }
-        Key_PressTime[2] = 0;
-        Key_LongPressed[2] = false;
-        break;
-    case 4:
-        if (!Key_LongPressed[3])
-        {
-
-        }
-        Key_PressTime[3] = 0;
-        Key_LongPressed[3] = false;
-        break;
-    default:
-        break;
+            }
+            Key_PressTime[3] = 0;
+            Key_LongPressed[3] = false;
+            break;
+        default:break;
     }
 }
 

@@ -1,5 +1,6 @@
 #include "lcd.h"
-
+/*LED引脚:PC8-PC15*/
+/*锁存器:PD2*/
 void LED_Show(uint8_t led, uint8_t value)
 {
     HAL_GPIO_WritePin(GPIOD,GPIO_PIN_2,GPIO_PIN_SET);
