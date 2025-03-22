@@ -13,7 +13,6 @@ uint8_t MyRTC_SetDate[3] = {0}; // 设置日期
 uint32_t Ferq;
 uint8_t Disp_mode = 0; // 显示模式
 
-
 /*计时任务*/
 void alarm_clock()
 {
@@ -45,7 +44,6 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 // 设置频率
 void Set_PWM_Frequency(uint32_t frequency,float duty_percent) {
     __HAL_TIM_SetAutoreload(&htim2, 1000000 / frequency - 1);
-
     duty_percent = (duty_percent < 0.0f) ? 0.0f : (duty_percent > 100.0f) ? 100.0f : duty_percent;
     uint32_t arr = __HAL_TIM_GET_AUTORELOAD(&htim2);
     uint32_t new_ccr = (uint32_t)((duty_percent / 100.0f) * (arr + 1));
@@ -236,7 +234,6 @@ void LCD_Proc(void)
         break;
     }
     MyRTC_ReadTime();
-		//LCD_Disp(Line3, "  %d         ", Ferq);
 }
 
 /*LED显示函数*/
