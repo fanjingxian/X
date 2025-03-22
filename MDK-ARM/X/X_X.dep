@@ -1,7 +1,7 @@
 Dependencies for Project 'X', Target 'X': (DO NOT MODIFY !)
 CompilerVersion: 5060750::V5.06 update 6 (build 750)::.\ARMCC
-F (.\startup_stm32g431xx.s)(0x67DBFE7D)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -I.\RTE\_X-IE:\Keil_MDK\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\Keil_MDK\Keil\STM32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include--pd "__UVISION_VERSION SETA 541" --pd "STM32G431xx SETA 1" --pd "_RTE_ SETA 1"--list ./x/\startup_stm32g431xx.lst --xref -o x\startup_stm32g431xx.o --depend x\startup_stm32g431xx.d)
-F (../Core/Src/main.c)(0x67DC1306)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../BSP/Inc -I ../BSP/Src-I.\RTE\_X-IE:\Keil_MDK\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\Keil_MDK\Keil\STM32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="541" -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o x\main.o --omf_browse x\main.crf --depend x\main.d)
+F (.\startup_stm32g431xx.s)(0x67DEB33E)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -I.\RTE\_X-IE:\Keil_MDK\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\Keil_MDK\Keil\STM32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include--pd "__UVISION_VERSION SETA 541" --pd "STM32G431xx SETA 1" --pd "_RTE_ SETA 1"--list ./x/\startup_stm32g431xx.lst --xref -o x\startup_stm32g431xx.o --depend x\startup_stm32g431xx.d)
+F (../Core/Src/main.c)(0x67DEB3C9)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../BSP/Inc -I ../BSP/Src-I.\RTE\_X-IE:\Keil_MDK\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\Keil_MDK\Keil\STM32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="541" -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o x\main.o --omf_browse x\main.crf --depend x\main.d)
 I (../Core/Inc/main.h)(0x67A18C27)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h)(0x67DBF95C)
 I (../Core/Inc/stm32g4xx_hal_conf.h)(0x67C6D7FB)
@@ -209,7 +209,7 @@ I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim.h)(0x67DBF95C)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h)(0x67DBF95C)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h)(0x67DBF95C)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h)(0x67DBF95C)
-F (../Core/Src/tim.c)(0x67DBF1A1)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../BSP/Inc -I ../BSP/Src-I.\RTE\_X-IE:\Keil_MDK\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\Keil_MDK\Keil\STM32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="541" -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o x\tim.o --omf_browse x\tim.crf --depend x\tim.d)
+F (../Core/Src/tim.c)(0x67DEB33C)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../BSP/Inc -I ../BSP/Src-I.\RTE\_X-IE:\Keil_MDK\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\Keil_MDK\Keil\STM32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="541" -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o x\tim.o --omf_browse x\tim.crf --depend x\tim.d)
 I (../Core/Inc/tim.h)(0x67A18C27)
 I (../Core/Inc/main.h)(0x67A18C27)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h)(0x67DBF95C)
@@ -1184,7 +1184,7 @@ F (..\BSP\Inc\fun.h)(0x67A18D99)()
 F (..\BSP\Inc\head.h)(0x67DC12F7)()
 F (..\BSP\Inc\lcd.h)(0x64113367)()
 F (..\BSP\Inc\led.h)(0x6793335F)()
-F (..\BSP\Src\fun.c)(0x67DC1A38)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../BSP/Inc -I ../BSP/Src-I.\RTE\_X-IE:\Keil_MDK\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\Keil_MDK\Keil\STM32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="541" -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o x\fun.o --omf_browse x\fun.crf --depend x\fun.d)
+F (..\BSP\Src\fun.c)(0x67DEB45F)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../BSP/Inc -I ../BSP/Src-I.\RTE\_X-IE:\Keil_MDK\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\Keil_MDK\Keil\STM32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="541" -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o x\fun.o --omf_browse x\fun.crf --depend x\fun.d)
 I (../BSP/Inc/head.h)(0x67DC12F7)
 I (E:\Keil_MDK\ARM\ARMCC\include\stdio.h)(0x5D9B348A)
 I (E:\Keil_MDK\ARM\ARMCC\include\string.h)(0x5D9B3488)
@@ -1275,7 +1275,7 @@ I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h)(0x67DBF95C)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h)(0x67DBF95C)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h)(0x67DBF95C)
 I (../BSP/Inc/fonts.h)(0x64113367)
-F (..\BSP\Src\led.c)(0x679334CC)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../BSP/Inc -I ../BSP/Src-I.\RTE\_X-IE:\Keil_MDK\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\Keil_MDK\Keil\STM32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="541" -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o x\led.o --omf_browse x\led.crf --depend x\led.d)
+F (..\BSP\Src\led.c)(0x67DC1D09)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include -I ../BSP/Inc -I ../BSP/Src-I.\RTE\_X-IE:\Keil_MDK\ARM\CMSIS\6.1.0\CMSIS\Core\Include-IE:\Keil_MDK\Keil\STM32G4xx_DFP\1.6.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="541" -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o x\led.o --omf_browse x\led.crf --depend x\led.d)
 I (../BSP/Inc/lcd.h)(0x64113367)
 I (../Core/Inc/main.h)(0x67A18C27)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h)(0x67DBF95C)

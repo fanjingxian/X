@@ -28,14 +28,16 @@ void alarm_clock()
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
     static uint32_t cnt;
-    if (htim == &htim3)
+    if (htim->Instance == TIM3)
     {
-        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2) // 直接输入捕获
+        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) // 直接输入捕获
         {
-            cnt = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2) + 1;
-            __HAL_TIM_SetCounter(htim, 0);
+            cnt = HAL_TIM_ReadCapturedValue(&htim3, TIM_CHANNEL_1) + 1;
             Ferq = 1000000 / cnt;
-            HAL_TIM_IC_Start(htim, TIM_CHANNEL_2);
+            __HAL_TIM_SetCounter(&htim3, 0);
+            //HAL_TIM_IC_Start(htim, TIM_CHANNEL_1);
+            
+            HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1);
         }
     }
 }
@@ -59,6 +61,7 @@ double getADC(void)
     adc = HAL_ADC_GetValue(&hadc2);
     return adc * 3.3 / 4096;
 }
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
     // if(huart->Instance == USART1) {
@@ -221,6 +224,7 @@ void LCD_Proc(void)
     case 1:
         LCD_Disp(Line1, "       time          ");
         LCD_Disp(Line3, "  %02d:%02d:%02d           ", MyRTC_Time[3], MyRTC_Time[4], MyRTC_Time[5]);
+        LCD_Disp(Line4, "  %d         ", Ferq);
         break;
     case 2:
 
@@ -232,6 +236,7 @@ void LCD_Proc(void)
         break;
     }
     MyRTC_ReadTime();
+		//LCD_Disp(Line3, "  %d         ", Ferq);
 }
 
 /*LED显示函数*/

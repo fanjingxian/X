@@ -111,7 +111,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   My_RTC_SetTime();
-  HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_2);
+  HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start_IT(&htim2,TIM_CHANNEL_2);
 	__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2, 500);
   while (1)
